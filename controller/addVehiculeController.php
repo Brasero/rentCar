@@ -14,5 +14,5 @@ if(isset($_POST['marque'])){
     }
 
 } else {
-    require dirname(__DIR__). '/view/addVehicule.php';
+    require dirname(__DIR__) . '/view/addVehicule.php';
 }

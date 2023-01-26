@@ -34,6 +34,7 @@ class PHPRenderer implements RendererInterface
             $path = $this->paths[self::DEFAULT_NAMESPACE] . DIRECTORY_SEPARATOR . $view . '.php';
         }
         ob_start();
+        $renderer = $this;
         extract($this->globals);
         extract($params);
         require($path);

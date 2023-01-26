@@ -8,6 +8,9 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/zendframework/zend-expressive-router" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/fig/http-message-util" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/nikic/fast-route" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/twig/twig" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-mbstring" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-ctype" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

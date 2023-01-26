@@ -21,6 +21,7 @@ class HomeModule
 
     public function index()
     {
-        return $this->renderer->render('@home/index');
+        return $this->renderer->render('@home/index',
+        ['siteName' => 'RentCar']);
     }
 }
