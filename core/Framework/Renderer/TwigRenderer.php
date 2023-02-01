@@ -11,10 +11,10 @@ class TwigRenderer implements RendererInterface
     private $twig;
     private $loader;
 
-    public function __construct(string $defaultPath)
+    public function __construct(FilesystemLoader $loader, Environment $twig)
     {
-        $this->loader = new FilesystemLoader($defaultPath);
-        $this->twig = new Environment($this->loader, []);
+        $this->loader = $loader;
+        $this->twig = $twig;
     }
     public function addPath(string $namespace, ?string $path = null): void
     {

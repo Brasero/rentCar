@@ -2,6 +2,7 @@
 namespace Core;
 
 use Exception;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Psr7\Response;
@@ -11,14 +12,17 @@ class App
 {
     private Router $router;
     private array $modules;
-    public function __construct(array $modules = [], array $dependencies = [])
+
+    private ContainerInterface $container;
+    public function __construct(ContainerInterface $container, array $modules = [])
     {
-        $this->router = new Router();
-        $dependencies['renderer']->addGlobal('router', $this->router);
+        $this->router = $container->get(Router::class);
 
         foreach ($modules as $module) {
-            $this->modules[] = new $module($this->router, $dependencies['renderer']);
+            $this->modules[] = $container->get($module);
         }
+
+        $this->container = $container;
     }
 
     public function run(ServerRequestInterface $request): ResponseInterface {
@@ -44,5 +48,10 @@ class App
         } else {
             throw new Exception("Réponse du server invalide");
         }
+    }
+
+    public function getContainer(): ContainerInterface
+    {
+        return $this->container;
     }
 }

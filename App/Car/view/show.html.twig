@@ -1,0 +1,28 @@
+{% extends "layout.html.twig" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="./assets/css/car.show.css" />
+{% endblock %}
+
+{% block body %}
+
+    <h1>Détails du véhicule</h1>
+
+    <h2>{{ voiture.marque }} | {{ voiture.model }}</h2>
+
+    <div class="detailContainer">
+        <div class="detailItem__group">
+            <span class="detailItem__label">Modèle</span>
+            <div class="detailItem__data">{{ voiture.model }}</div>
+        </div>
+        <div class="detailItem__group">
+            <span class="detailItem__label">Marque</span>
+            <div class="detailItem__data">{{ voiture.marque }}</div>
+        </div>
+        <div class="detailItem__group">
+            <span class="detailItem__label">Couleur</span>
+            <div class="detailItem__data">{{ voiture.couleur }}</div>
+        </div>
+    </div>
+
+{% endblock %}

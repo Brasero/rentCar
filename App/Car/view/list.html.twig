@@ -1,0 +1,25 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <h1>Liste des véhicules</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Modèle</th>
+                <th>Marque</th>
+                <th>Couleur</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for voiture in voitures %}
+                <tr>
+                    <td>{{ voiture.model }}</td>
+                    <td>{{ voiture.marque }}</td>
+                    <td>{{ voiture.couleur }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
