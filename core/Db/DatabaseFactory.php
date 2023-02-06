@@ -11,7 +11,7 @@ class DatabaseFactory
     public function __invoke(ContainerInterface $container): ?EntityManager
     {
         $paths = [dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'model/entity'];
-        $isDevMode = $container->get("doctrine.devMode");
+        $isDevMode = true;
         $dbParams = [
             "driver" => $container->get("doctrine.driver"),
             "user" => $container->get("doctrine.user"),

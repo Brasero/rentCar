@@ -9,6 +9,7 @@
                 <th>Modèle</th>
                 <th>Marque</th>
                 <th>Couleur</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -16,7 +17,13 @@
                 <tr>
                     <td>{{ voiture.model }}</td>
                     <td>{{ voiture.marque }}</td>
-                    <td>{{ voiture.couleur }}</td>
+                    <td>
+                        <div style="width: 25px; height: 25px; background: {{ voiture.couleur }};" ></div>
+                    </td>
+                    <td>
+                        <a href="">Modifier</a>
+                        <a href="">Supprimer</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

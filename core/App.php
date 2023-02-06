@@ -39,6 +39,12 @@ class App
             return new Response(404, [], "<h2>Cette page n'existe pas</h2>");
         }
 
+        $params = $route->getParams();
+
+        $request = array_reduce(array_keys($params), function ($request, $key) use ($params) {
+            return $request->withAttribute($key, $params[$key]);
+        }, $request);
+
         $response = call_user_func_array($route->getCallback(), [$request]);
 
         if ($response instanceof ResponseInterface) {

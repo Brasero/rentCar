@@ -30,5 +30,7 @@ $container = $builder->build();
 $app = new App($container, $modules);
 
 
-$response = $app->run(ServerRequest::fromGlobals());
-send($response);
+if (php_sapi_name() !== 'cli') {
+    $response = $app->run(ServerRequest::fromGlobals());
+    send($response);
+}
