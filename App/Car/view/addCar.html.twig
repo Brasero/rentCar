@@ -7,8 +7,12 @@
             <input type="text" name="modele" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
         </div>
         <div class="input-group input-group-sm mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-sm">Marque</span>
-            <input type="text" name="marque" class="form-control" aria-label="Sizing example input"  aria-describedby="inputGroup-sizing-sm">
+            <select name="marque">
+                <option value="null" selected>---</option>
+                {% for marque in marques %}
+                    <option value="{{ marque.id }}">{{ marque.name }}</option>
+                {% endfor %}
+            </select>
         </div>
         <div class="input-group input-group-sm mb-3">
             <span class="input-group-text" id="inputGroup-sizing-sm">Couleur</span>

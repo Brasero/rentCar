@@ -16,13 +16,14 @@
             {% for voiture in voitures %}
                 <tr>
                     <td>{{ voiture.model }}</td>
-                    <td>{{ voiture.marque }}</td>
+                    <td>{{ voiture.marque.name }}</td>
                     <td>
                         <div style="width: 25px; height: 25px; background: {{ voiture.couleur }};" ></div>
                     </td>
                     <td>
-                        <a href="">Modifier</a>
-                        <a href="">Supprimer</a>
+                        <a href="{{ path('car.update', {id: voiture.id}) }}">Modifier</a>
+                        <a href="{{ path('car.delete', {id: voiture.id}) }}">Supprimer</a>
+                        <a href="{{ path('car.show', {id: voiture.id}) }}">Voir</a>
                     </td>
                 </tr>
             {% endfor %}

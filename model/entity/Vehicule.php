@@ -27,10 +27,12 @@ class Vehicule
     private string $model;
 
     /**
-     * @ORM\Column(type="string", length="55")
-     * @var string
+     * @ORM\ManyToOne(targetEntity="Marque", inversedBy="vehicules")
+     * @ORM\JoinColumn(name="marque_id", referencedColumnName="id", onDelete="CASCADE")
+     * @var Marque
      */
-    private string $marque;
+    private Marque $marque;
+
 
     /**
      * @ORM\Column(type="string", length="10")
@@ -72,29 +74,6 @@ class Vehicule
         return $this->model;
     }
 
-    /**
-     * Set marque.
-     *
-     * @param string $marque
-     *
-     * @return Vehicule
-     */
-    public function setMarque($marque)
-    {
-        $this->marque = $marque;
-
-        return $this;
-    }
-
-    /**
-     * Get marque.
-     *
-     * @return string
-     */
-    public function getMarque()
-    {
-        return $this->marque;
-    }
 
     /**
      * Set couleur.
@@ -118,5 +97,29 @@ class Vehicule
     public function getCouleur()
     {
         return $this->couleur;
+    }
+
+    /**
+     * Set marque.
+     *
+     * @param Marque|null $marque
+     *
+     * @return Vehicule
+     */
+    public function setMarque(Marque $marque = null)
+    {
+        $this->marque = $marque;
+
+        return $this;
+    }
+
+    /**
+     * Get marque.
+     *
+     * @return Marque|null
+     */
+    public function getMarque()
+    {
+        return $this->marque;
     }
 }
