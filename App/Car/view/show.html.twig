@@ -8,7 +8,7 @@
 
     <h1>Détails du véhicule</h1>
 
-    <h2>{{ voiture.marque }} | {{ voiture.model }}</h2>
+    <h2>{{ voiture.marque.name }} | {{ voiture.model }}</h2>
 
     <div class="detailContainer">
         <div class="detailItem__group">
@@ -17,7 +17,7 @@
         </div>
         <div class="detailItem__group">
             <span class="detailItem__label">Marque</span>
-            <div class="detailItem__data">{{ voiture.marque }}</div>
+            <div class="detailItem__data">{{ voiture.marque.name }}</div>
         </div>
         <div class="detailItem__group">
             <span class="detailItem__label">Couleur</span>

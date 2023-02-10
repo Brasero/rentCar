@@ -8,7 +8,7 @@
         </div>
         <div class="input-group input-group-sm mb-3">
             <select name="marque">
-                <option value="null" selected>---</option>
+                <option value="" selected>---</option>
                 {% for marque in marques %}
                     <option value="{{ marque.id }}">{{ marque.name }}</option>
                 {% endfor %}

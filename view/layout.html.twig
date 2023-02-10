@@ -33,12 +33,20 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{ path('marque.add') }}">Ajouter marque</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{{ path('marque.list') }}">Liste des marques</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
     <main>
+
+        {% if hasToast() %}
+            {{ renderToast() }}
+        {% endif %}
+
     {% block body %}
         <!-- inserer page içi -->
     {% endblock %}

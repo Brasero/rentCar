@@ -7,8 +7,16 @@
             <input type="text" name="modele" value="{{ voiture.model }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
         </div>
         <div class="input-group input-group-sm mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-sm">Marque</span>
-            <input type="text" name="marque" value="{{ voiture.marque }}" class="form-control" aria-label="Sizing example input"  aria-describedby="inputGroup-sizing-sm">
+            <select name="marque">
+                <option value="null">---</option>
+                {% for marque in marques %}
+                    {% if marque.id is same as(voiture.marque.id)  %}
+                        <option value="{{ marque.id }}" selected>{{ marque.name }}</option>
+                        {% else %}
+                            <option value="{{ marque.id }}">{{ marque.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
         </div>
         <div class="input-group input-group-sm mb-3">
             <span class="input-group-text" id="inputGroup-sizing-sm">Couleur</span>
