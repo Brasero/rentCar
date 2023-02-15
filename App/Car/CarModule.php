@@ -36,5 +36,8 @@ class CarModule extends AbstractModule
         $this->router->get('/addMarque', [$marqueAction, 'addMarque'], 'marque.add');
         $this->router->post('/addMarque', [$marqueAction, 'addMarque']);
         $this->router->get('/marqueList', [$marqueAction, 'marqueList'], 'marque.list');
+        $this->router->get('/delete/marque/{id:[\d]+}', [$marqueAction, 'delete'], 'marque.delete');
+        $this->router->get('/updateMarque/{id:[\d]+}', [$marqueAction, 'update'], 'marque.update');
+        $this->router->post('/updateMarque/{id:[\d]+}', [$marqueAction, 'update']);
     }
 }

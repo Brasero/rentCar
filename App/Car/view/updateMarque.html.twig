@@ -1,0 +1,11 @@
+{% extends "layout.html.twig" %}
+
+{% block body %}
+    <form method="POST" action="" class="card p-4" style="max-width: 500px;">
+        <div class="input-group input-group-sm mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Marque</span>
+            <input type="text" name="marque" value="{{ marque.name }}" class="form-control" aria-label="Sizing example input"  aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <input type="submit" value="Ajouter" />
+    </form>
+{% endblock %}

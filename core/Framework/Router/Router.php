@@ -5,7 +5,6 @@ namespace Core\Framework\Router;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Expressive\Router\FastRouteRouter;
 use Zend\Expressive\Router\Route as ZendRoute;
-use Core\Framework\Router\Route;
 
 class Router
 {

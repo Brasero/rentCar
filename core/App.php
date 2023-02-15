@@ -1,6 +1,7 @@
 <?php
 namespace Core;
 
+use Core\Framework\Middleware\MiddlewareInterface;
 use Exception;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -14,6 +15,8 @@ class App
     private array $modules;
 
     private ContainerInterface $container;
+
+    private MiddlewareInterface $middleware;
     public function __construct(ContainerInterface $container, array $modules = [])
     {
         $this->router = $container->get(Router::class);
@@ -26,34 +29,13 @@ class App
     }
 
     public function run(ServerRequestInterface $request): ResponseInterface {
-        $uri = $request->getUri()->getPath();
-        if(!empty($uri) && $uri[-1] === '/' && $uri != '/') {
-            return (new Response())
-                ->withStatus(301)
-                ->withHeader('Location', substr($uri, 0, -1));
-        }
+        return $this->middleware->process($request);
+    }
 
-        $route = $this->router->match($request);
-
-        if (is_null($route)) {
-            return new Response(404, [], "<h2>Cette page n'existe pas</h2>");
-        }
-
-        $params = $route->getParams();
-
-        $request = array_reduce(array_keys($params), function ($request, $key) use ($params) {
-            return $request->withAttribute($key, $params[$key]);
-        }, $request);
-
-        $response = call_user_func_array($route->getCallback(), [$request]);
-
-        if ($response instanceof ResponseInterface) {
-            return $response;
-        } elseif (is_string($response)) {
-            return new Response(200,[], $response);
-        } else {
-            throw new Exception("Réponse du server invalide");
-        }
+    public function linkFirst(MiddlewareInterface $middleware): MiddlewareInterface
+    {
+        $this->middleware = $middleware;
+        return $middleware;
     }
 
     public function getContainer(): ContainerInterface

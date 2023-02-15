@@ -15,7 +15,8 @@
             <tr>
                 <td>{{ marque.name }}</td>
                 <td>
-                    <a href="">Supprimer</a>
+                    <a href="{{ path('marque.update', {id: marque.id}) }}">Modifier</a>
+                    <a href="{{ path('marque.delete', {id: marque.id}) }}">Supprimer</a>
                 </td>
             </tr>
         {% endfor %}
