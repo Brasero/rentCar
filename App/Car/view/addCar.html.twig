@@ -1,5 +1,9 @@
 {% extends "layout.html.twig" %}
 
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ assets('assets/css/style.css') }}" />
+{% endblock %}
+
 {% block body %}
     <form method="POST" action="" class="card p-4" style="max-width: 500px;" enctype="multipart/form-data">
         <div class="input-group input-group-sm mb-3">

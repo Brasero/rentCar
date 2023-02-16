@@ -25,5 +25,10 @@
             "App\\": "App/",
             "Model\\Entity\\": "model/entity/"
         }
+    },
+    "scripts": {
+        "generate-entities": "php vendor/bin/doctrine orm:generate-entities ./ --regenerate-entities",
+        "update-db": "php vendor/bin/doctrine orm:schema-tool:update --force",
+        "start": "php -S localhost:8000 -t public"
     }
 }

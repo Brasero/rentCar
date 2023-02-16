@@ -1,5 +1,6 @@
 <?php
 
+use App\Admin\AdminModule;
 use App\Car\CarModule;
 use App\Home\HomeModule;
 use Core\Framework\Middleware\NotFoundMiddleware;
@@ -17,7 +18,8 @@ require dirname(__DIR__).'/vendor/autoload.php';
 
 $modules = [
     HomeModule::class,
-    CarModule::class
+    CarModule::class,
+    AdminModule::class
 ];
 
 $builder = new ContainerBuilder();

@@ -1,0 +1,15 @@
+{% extends "layout.html.twig" %}
+
+{% block body %}
+    <form method="POST" action="" class="card p-4" style="max-width: 500px;">
+        <div class="input-group input-group-sm mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Mail</span>
+            <input type="text" name="mail" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="input-group input-group-sm mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Mot de passe</span>
+            <input type="password" name="mdp" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <input type="submit" value="Se connecter" />
+    </form>
+{% endblock %}
