@@ -54,4 +54,13 @@ class AuthAction
         }
         return $this->renderer->render('@admin/login');
     }
+
+    public function logout()
+    {
+        $auth = $this->container->get(AdminAuth::class);
+        $auth->logout();
+        $this->toaster->makeToast('Deconnexion reussie.', Toaster::SUCCESS);
+        return (new Response())
+            ->withHeader('Location', '/admin/login');
+    }
 }

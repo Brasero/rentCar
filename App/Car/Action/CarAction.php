@@ -6,8 +6,10 @@ use Core\Framework\Validator\Validator;
 use Core\Toaster\Toaster;
 use Doctrine\ORM\EntityManager;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\UploadedFile;
 use Model\Entity\Marque;
 use Model\Entity\Vehicule;
+use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class CarAction
@@ -29,7 +31,7 @@ class CarAction
     /**
      * Methode ajoutant un vehicule en bdd
      * @param ServerRequestInterface $request
-     * @return \Psr\Http\Message\MessageInterface|string
+     * @return MessageInterface|string
      */
     public function addCar(ServerRequestInterface $request)
     {
@@ -37,6 +39,7 @@ class CarAction
 
         if ($method === 'POST') {
             $data = $request->getParsedBody();
+            $file = $request->getUploadedFiles()["image"];
 
             $validator = new Validator($data);
             $errors = $validator
@@ -47,15 +50,24 @@ class CarAction
                     $this->toaster->makeToast($error->toString(), Toaster::ERROR);
                 }
                 return (new Response())
-                    ->withHeader('Location', '/addCar');
+                    ->withHeader('Location', '/admin/addCar');
             }
-
+            $this->fileGuards($file);
+            $fileName = $file->getClientFileName();
+            $imgPath = dirname(__DIR__, 3) . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . $fileName;
+            $file->moveTo($imgPath);
+            if (!$file->isMoved()) {
+                $this->toaster->makeToast("Une erreur s'est produite durant l'enregistrement de votre image, merci de réessayer.", Toaster::ERROR);
+                return (new Response())
+                    ->withHeader('Location', '/admin/addCar');
+            }
             $new = new Vehicule();
             $marque = $this->marqueRepository->find($data['marque']);
             if ($marque) {
                 $new->setModel($data['modele'])
                     ->setMarque($marque)
-                    ->setCouleur($data['couleur']);
+                    ->setCouleur($data['couleur'])
+                    ->setImgPath($imgPath);
 
                 $this->manager->persist($new);
                 $this->manager->flush();
@@ -63,7 +75,7 @@ class CarAction
             }
 
             return (new Response)
-                ->withHeader('Location', '/listCar');
+                ->withHeader('Location', '/admin/listCar');
         }
 
         $marques = $this->marqueRepository->findAll();
@@ -106,7 +118,7 @@ class CarAction
     /**
      * Modifie un véhicule en bdd
      * @param ServerRequestInterface $request
-     * @return \Psr\Http\Message\MessageInterface|string
+     * @return MessageInterface|string
      * @throws \Doctrine\ORM\Exception\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
@@ -126,7 +138,7 @@ class CarAction
             $this->manager->flush();
             $this->toaster->makeToast('Véhicule ajoutée avec success', Toaster::SUCCESS);
             return (new Response)
-                ->withHeader('Location', '/listCar');
+                ->withHeader('Location', '/admin/listCar');
         }
 
         $marques = $this->marqueRepository->findAll();
@@ -140,7 +152,7 @@ class CarAction
     /**
      * Supprime un vehicule de la bdd
      * @param ServerRequestInterface $request
-     * @return \Psr\Http\Message\MessageInterface
+     * @return MessageInterface
      * @throws \Doctrine\ORM\Exception\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
@@ -154,8 +166,38 @@ class CarAction
         $this->toaster->makeToast('Véhicule supprimé', Toaster::SUCCESS);
 
         return (new Response())
-            ->withHeader('Location', '/listCar');
+            ->withHeader('Location', '/admin/listCar');
     }
 
+    private function fileGuards(UploadedFile $file)
+    {
+        //Handle Server error
+        if ($file->getError() === 4) {
+            $this->toaster->makeToast("Une erreur est survenu lors du chargement du fichier.", Toaster::SUCCESS);
+            return (new Response())
+                ->withHeader('Location', '/admin/addCar');
+        }
 
+        list($type, $format) = explode('/', $file->getClientMediaType());
+
+        //Handle format error
+        if (!in_array($type, ['image']) or !in_array($format, ['jpg', 'jpeg', 'png']))
+        {
+            $this->toaster->makeToast(
+                "ERREUR : Le format du fichier n'est pas valide, merci de charger un .png, .jpeg ou .jpg",
+                Toaster::ERROR
+            );
+            return (new Response())
+                ->withHeader('Location', '/admin/addCar');
+        }
+
+        //Handle excessive size
+        if ($file->getSize() > 2047674) {
+            $this->toaster->makeToast("Merci de choisir un fichier n'excédant pas 2Mo", Toaster::ERROR);
+            return (new Response())
+                ->withHeader('Location', '/admin/addCar');
+        }
+
+        return true;
+    }
 }

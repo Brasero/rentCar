@@ -26,18 +26,18 @@ class CarModule extends AbstractModule
         $marqueAction = $container->get(MarqueAction::class);
 
         $this->renderer->addPath('car',__DIR__ . DIRECTORY_SEPARATOR . 'view');
-        $this->router->get('/addCar', [$carAction, 'addCar'], 'car.add');
-        $this->router->get('/listCar', [$carAction, 'listCar'], 'car.list');
+        $this->router->get('/admin/addCar', [$carAction, 'addCar'], 'car.add');
+        $this->router->get('/admin/listCar', [$carAction, 'listCar'], 'car.list');
         $this->router->get('/show/{id:[\d]+}', [$carAction, 'show'], 'car.show');
-        $this->router->get('/update/{id:[\d]+}', [$carAction, 'update'], 'car.update');
-        $this->router->post('/update/{id:[\d]+}', [$carAction, 'update']);
-        $this->router->post('/addCar', [$carAction, 'addCar']);
-        $this->router->get('/delete/{id:[\d]+}', [$carAction, 'delete'], 'car.delete');
-        $this->router->get('/addMarque', [$marqueAction, 'addMarque'], 'marque.add');
-        $this->router->post('/addMarque', [$marqueAction, 'addMarque']);
-        $this->router->get('/marqueList', [$marqueAction, 'marqueList'], 'marque.list');
-        $this->router->get('/delete/marque/{id:[\d]+}', [$marqueAction, 'delete'], 'marque.delete');
-        $this->router->get('/updateMarque/{id:[\d]+}', [$marqueAction, 'update'], 'marque.update');
-        $this->router->post('/updateMarque/{id:[\d]+}', [$marqueAction, 'update']);
+        $this->router->get('/admin/update/{id:[\d]+}', [$carAction, 'update'], 'car.update');
+        $this->router->post('/admin/update/{id:[\d]+}', [$carAction, 'update']);
+        $this->router->post('/admin/addCar', [$carAction, 'addCar']);
+        $this->router->get('/admin/delete/{id:[\d]+}', [$carAction, 'delete'], 'car.delete');
+        $this->router->get('/admin/addMarque', [$marqueAction, 'addMarque'], 'marque.add');
+        $this->router->post('/admin/addMarque', [$marqueAction, 'addMarque']);
+        $this->router->get('/admin/marqueList', [$marqueAction, 'marqueList'], 'marque.list');
+        $this->router->get('/admin/delete/marque/{id:[\d]+}', [$marqueAction, 'delete'], 'marque.delete');
+        $this->router->get('/admin/updateMarque/{id:[\d]+}', [$marqueAction, 'update'], 'marque.update');
+        $this->router->post('/admin/updateMarque/{id:[\d]+}', [$marqueAction, 'update']);
     }
 }

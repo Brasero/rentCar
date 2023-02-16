@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Admin\Action\AdminAction;
 use App\Admin\Action\AuthAction;
 use Core\Framework\AbstractClass\AbstractModule;
 use Core\Framework\Renderer\RendererInterface;
@@ -23,10 +24,14 @@ class AdminModule extends AbstractModule
         $this->renderer = $container->get(RendererInterface::class);
         $this->router = $container->get(Router::class);
         $authAction = $container->get(AuthAction::class);
+        $adminAction = $container->get(AdminAction::class);
 
         $this->renderer->addPath('admin',  __DIR__.DIRECTORY_SEPARATOR.'views');
 
         $this->router->get('/admin/login', [$authAction, 'login'], 'admin.login');
         $this->router->post('/admin/login', [$authAction, 'login']);
+        $this->router->get('/admin/logout', [$authAction, 'logout'], 'admin.logout');
+        $this->router->get('/admin/home', [$adminAction, 'home'], 'admin.home');
+
     }
 }

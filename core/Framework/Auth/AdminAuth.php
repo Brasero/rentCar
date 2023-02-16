@@ -27,4 +27,22 @@ class AdminAuth
         }
         return false;
     }
+
+    public function logout(): void
+    {
+        $this->session->delete('auth');
+    }
+
+    public function isLogged(): bool
+    {
+        return $this->session->has('auth');
+    }
+
+    public function isAdmin(): bool
+    {
+        if ($this->isLogged()) {
+            return $this->session->get('auth') instanceof Admin;
+        }
+        return false;
+    }
 }
