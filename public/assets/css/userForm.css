@@ -1,0 +1,38 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100dvh;
+    min-width: 100dvw;
+}
+
+.userFormViewPort {
+    min-width: 450px;
+    height: fit-content;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.4);
+    border-radius: 15px;
+}
+
+.formContainer {
+    width: 100%;
+    position: relative;
+    height: 450px;
+}
+
+.formContainer form {
+    position: absolute;
+    min-width: 450px;
+    transition: .5s all ease-in-out;
+}
+
+.formConnexion {
+    top: 0;
+    left: 0;
+}
+
+.formInscription {
+    top: 0;
+    left: 110%;
+}

@@ -3,6 +3,7 @@
 use App\Admin\AdminModule;
 use App\Car\CarModule;
 use App\Home\HomeModule;
+use App\User\UserModule;
 use Core\Framework\Middleware\AdminAuthMiddleware;
 use Core\Framework\Middleware\NotFoundMiddleware;
 use Core\Framework\Middleware\RouterDispatcherMiddleware;
@@ -20,7 +21,8 @@ require dirname(__DIR__).'/vendor/autoload.php';
 $modules = [
     HomeModule::class,
     CarModule::class,
-    AdminModule::class
+    AdminModule::class,
+    UserModule::class
 ];
 
 $builder = new ContainerBuilder();

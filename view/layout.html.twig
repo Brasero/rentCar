@@ -24,6 +24,9 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/">Home</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{ path('user.login') }}">Inscription / Connexion</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -42,5 +45,7 @@
     <footer>
         <h1>Je suis le footer</h1>
     </footer>
+    {% block scripts %}
+    {% endblock %}
 </body>
 </html>

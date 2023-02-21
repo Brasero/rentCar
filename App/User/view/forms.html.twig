@@ -1,0 +1,59 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheet %}
+ <link rel="stylesheet" href="{{ assets('/assets/css/userForm.css') }}" />
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ assets('/assets/js/formSlider.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    <div class="userFormViewPort">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary" onclick="slider('connexion')">Connexion</button>
+            <button type="button" class="btn btn-secondary" onclick="slider('inscription')">Inscription</button>
+        </div>
+        <div class="formContainer d-flex">
+            {# Formulaire connexion #}
+            <form method="POST" class="p-4 formConnexion" action="">
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" name="email" id="connexion_email" placeholder="name@example.com">
+                    <label for="connexion_email">Email address</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" name="mdp" id="connexion_password" placeholder="Password">
+                    <label for="connexion_password">Password</label>
+                </div>
+                <input type="submit" value="Connexion">
+            </form>
+
+            {# Formulaire inscription #}
+            <form method="POST" class="p-4 formInscription" action="">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="nom" id="nom" placeholder="name@example.com">
+                    <label for="nom">Nom</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="prenom" id="prenom" placeholder="name@example.com">
+                    <label for="prenom">Prénom</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" name="email" id="mail" placeholder="name@example.com">
+                    <label for="mail">Email address</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" name="mdp" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">Mot de passe</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" name="mdp_confirm" id="floatingPasswordConfirm" placeholder="Password">
+                    <label for="floatingPasswordConfirm">Confirmer le mot de passe</label>
+                </div>
+                <input type="submit" value="Inscription">
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
