@@ -2,6 +2,8 @@
 namespace App\Car\Action;
 
 use Core\Framework\Renderer\RendererInterface;
+use Core\Framework\Router\RedirectTrait;
+use Core\Framework\Router\Router;
 use Core\Framework\Validator\Validator;
 use Core\Toaster\Toaster;
 use Doctrine\ORM\EntityManager;
@@ -9,23 +11,38 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\UploadedFile;
 use Model\Entity\Marque;
 use Model\Entity\Vehicule;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class CarAction
 {
+    use RedirectTrait;
+
     private RendererInterface $renderer;
     private EntityManager $manager;
     private Toaster $toaster;
     private $marqueRepository;
     private $repository;
-    public function __construct(RendererInterface $renderer, EntityManager $manager, Toaster $toaster)
+
+    private ContainerInterface $container;
+
+    private Router $router;
+
+    public function __construct(
+        RendererInterface $renderer,
+        EntityManager $manager,
+        Toaster $toaster,
+        ContainerInterface $container
+    )
     {
         $this->renderer = $renderer;
         $this->manager = $manager;
         $this->toaster = $toaster;
+        $this->router = $container->get(Router::class);
         $this->marqueRepository = $manager->getRepository(Marque::class);
         $this->repository = $manager->getRepository(Vehicule::class);
+        $this->container = $container;
     }
 
     /**
@@ -49,17 +66,18 @@ class CarAction
                 foreach($errors as $error) {
                     $this->toaster->makeToast($error->toString(), Toaster::ERROR);
                 }
-                return (new Response())
-                    ->withHeader('Location', '/admin/addCar');
+                return $this->redirect('car.add');
             }
-            $this->fileGuards($file);
+            $error = $this->fileGuards($file);
+            if ($error !== true) {
+                return $error;
+            }
             $fileName = $file->getClientFileName();
-            $imgPath = dirname(__DIR__, 3) . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . $fileName;
+            $imgPath = $this->container->get('img.basePath') . $fileName;
             $file->moveTo($imgPath);
             if (!$file->isMoved()) {
                 $this->toaster->makeToast("Une erreur s'est produite durant l'enregistrement de votre image, merci de réessayer.", Toaster::ERROR);
-                return (new Response())
-                    ->withHeader('Location', '/admin/addCar');
+                return $this->redirect('car.add');
             }
             $new = new Vehicule();
             $marque = $this->marqueRepository->find($data['marque']);
@@ -67,15 +85,14 @@ class CarAction
                 $new->setModel($data['modele'])
                     ->setMarque($marque)
                     ->setCouleur($data['couleur'])
-                    ->setImgPath($imgPath);
+                    ->setImgPath($fileName);
 
                 $this->manager->persist($new);
                 $this->manager->flush();
                 $this->toaster->makeToast('Véhicule ajoutée avec success', Toaster::SUCCESS);
             }
 
-            return (new Response)
-                ->withHeader('Location', '/admin/listCar');
+            return $this->redirect('car.list');
         }
 
         $marques = $this->marqueRepository->findAll();
@@ -130,6 +147,20 @@ class CarAction
 
         if ($method === 'POST') {
             $data = $request->getParsedBody();
+            $files = $request->getUploadedFiles();
+            if (sizeof($files) > 0 && $files['image']->getError() !== 4) {
+                $oldImg = $voiture->getImgPath();
+                $newImg = $files['image'];
+                $imgName = $newImg->getClientFileName();
+                $imgPath = $this->container->get('img.basePath') . $imgName;
+                $this->fileGuards($newImg);
+                $newImg->moveTo($imgPath);
+                if ($newImg->isMoved()) {
+                    $voiture->setImgPath($imgName);
+                    $oldPath = $this->container->get('img.basePath') . $oldImg;
+                    unlink($oldPath);
+                }
+            }
             $marque = $this->marqueRepository->find($data['marque']);
             $voiture->setModel($data['modele'])
                 ->setMarque($marque)
@@ -137,8 +168,7 @@ class CarAction
 
             $this->manager->flush();
             $this->toaster->makeToast('Véhicule ajoutée avec success', Toaster::SUCCESS);
-            return (new Response)
-                ->withHeader('Location', '/admin/listCar');
+            return $this->redirect('car.list');
         }
 
         $marques = $this->marqueRepository->findAll();
@@ -165,8 +195,7 @@ class CarAction
 
         $this->toaster->makeToast('Véhicule supprimé', Toaster::SUCCESS);
 
-        return (new Response())
-            ->withHeader('Location', '/admin/listCar');
+        return $this->redirect('car.list');
     }
 
     private function fileGuards(UploadedFile $file)
@@ -174,8 +203,7 @@ class CarAction
         //Handle Server error
         if ($file->getError() === 4) {
             $this->toaster->makeToast("Une erreur est survenu lors du chargement du fichier.", Toaster::SUCCESS);
-            return (new Response())
-                ->withHeader('Location', '/admin/addCar');
+            return $this->redirect('car.add');
         }
 
         list($type, $format) = explode('/', $file->getClientMediaType());
@@ -187,15 +215,13 @@ class CarAction
                 "ERREUR : Le format du fichier n'est pas valide, merci de charger un .png, .jpeg ou .jpg",
                 Toaster::ERROR
             );
-            return (new Response())
-                ->withHeader('Location', '/admin/addCar');
+            return $this->redirect('car.add');
         }
 
         //Handle excessive size
         if ($file->getSize() > 2047674) {
             $this->toaster->makeToast("Merci de choisir un fichier n'excédant pas 2Mo", Toaster::ERROR);
-            return (new Response())
-                ->withHeader('Location', '/admin/addCar');
+            return $this->redirect('car.add');
         }
 
         return true;

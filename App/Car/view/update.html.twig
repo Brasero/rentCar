@@ -22,6 +22,13 @@
             <span class="input-group-text" id="inputGroup-sizing-sm">Couleur</span>
             <input type="color" name="couleur" value="{{ voiture.couleur }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
         </div>
+        <div class="img-container">
+            <img style="width: 250px; height: 180px;" src="{{ assets('/assets/img/'~voiture.imgPath) }}" />
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupFile01">Image</label>
+            <input type="file" name="image" class="form-control" id="inputGroupFile01">
+        </div>
         <input type="submit" value="Modifier" />
     </form>
 {% endblock %}
