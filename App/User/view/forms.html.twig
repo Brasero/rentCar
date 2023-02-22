@@ -17,9 +17,9 @@
         </div>
         <div class="formContainer d-flex">
             {# Formulaire connexion #}
-            <form method="POST" class="p-4 formConnexion" action="">
+            <form method="POST" class="p-4 formConnexion" action="{{ path('user.connexion') }}">
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" name="email" id="connexion_email" placeholder="name@example.com">
+                    <input type="email" class="form-control" name="mail" id="connexion_email" placeholder="name@example.com">
                     <label for="connexion_email">Email address</label>
                 </div>
                 <div class="form-floating">
@@ -30,7 +30,7 @@
             </form>
 
             {# Formulaire inscription #}
-            <form method="POST" class="p-4 formInscription" action="">
+            <form method="POST" class="p-4 formInscription" action="{{ path('user.new') }}">
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" name="nom" id="nom" placeholder="name@example.com">
                     <label for="nom">Nom</label>
@@ -40,7 +40,7 @@
                     <label for="prenom">Prénom</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" name="email" id="mail" placeholder="name@example.com">
+                    <input type="email" class="form-control" name="mail" id="mail" placeholder="name@example.com">
                     <label for="mail">Email address</label>
                 </div>
                 <div class="form-floating">

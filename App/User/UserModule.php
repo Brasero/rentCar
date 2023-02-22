@@ -24,5 +24,8 @@ class UserModule extends AbstractModule
         $this->renderer = $container->get(RendererInterface::class);
         $this->renderer->addPath('user', __DIR__ . DIRECTORY_SEPARATOR . 'view');
         $this->router->get('/login', [$userAction, 'logView'], 'user.login');
+        $this->router->post('/newUser', [$userAction, 'signin'], 'user.new');
+        $this->router->post('/connexion', [$userAction, 'login'], 'user.connexion');
+        $this->router->get('/user/home', [$userAction, 'home'], 'user.home');
     }
 }

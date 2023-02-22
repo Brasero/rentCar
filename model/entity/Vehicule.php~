@@ -128,4 +128,28 @@ class Vehicule
     {
         return $this->marque;
     }
+
+    /**
+     * Set imgPath.
+     *
+     * @param string $imgPath
+     *
+     * @return Vehicule
+     */
+    public function setImgPath($imgPath)
+    {
+        $this->imgPath = $imgPath;
+
+        return $this;
+    }
+
+    /**
+     * Get imgPath.
+     *
+     * @return string
+     */
+    public function getImgPath()
+    {
+        return $this->imgPath;
+    }
 }
