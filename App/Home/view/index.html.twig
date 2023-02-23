@@ -1,7 +1,22 @@
 {% extends 'layout.html.twig' %}
 
+{% block stylesheet %}
+
+    <link rel="stylesheet" href="{{ assets('/assets/css/home.css') }}"/>
+
+{% endblock %}
+
 {% block body %}
 
-<h1> Bienvenue sur {{ siteName }} </h1>
+    <div class="container-perso">
+        <div class="card">
+            <div class="card-header">Votre Auto sans dépôt.</div>
+            <div class="card-body d-grid gap-0">
+                <h5 class="card-title">Avec RentCar</h5>
+                <div class="card-text">Réservez votre véhicule maintenant et récupérez dans 2 h dans l'une de nos 110 boutiques</div>
+                <a href="" class="btn btn-lg btn-danger">Réserver</a>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
