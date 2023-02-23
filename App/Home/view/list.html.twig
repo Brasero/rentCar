@@ -1,0 +1,29 @@
+{% extends 'layout.html.twig' %}
+
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Nos vehicules</h1>
+                <hr>
+                {% for auto in autos %}
+                    <div class="row">
+                        <div class="col-6">
+                            <h2>{{ auto.marque.name }} | {{ auto.model }}</h2>
+                            <img src="{{ assets('/assets/img/' ~ auto.imgPath) }}" style="max-height: 150px;" alt="image d'une {{ auto.marque.name }} {{ auto.model }}">
+                        </div>
+                        <div class="col-6">
+                            <a href="" class="btn btn-primary">Voir plus</a>
+                        </div>
+
+                    </div>
+                    <hr>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
