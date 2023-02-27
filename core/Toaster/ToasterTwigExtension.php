@@ -27,7 +27,7 @@ class ToasterTwigExtension extends AbstractExtension
         return $this->toaster->hasToast();
     }
 
-    public function render(): string
+    public function render(): array
     {
         return $this->toaster->renderToast();
     }

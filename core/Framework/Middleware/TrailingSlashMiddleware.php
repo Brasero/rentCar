@@ -4,6 +4,9 @@ namespace Core\Framework\Middleware;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Retire le slash a la fin de l'url si il en a un
+ */
 class TrailingSlashMiddleware extends AbstractMiddleware
 {
     public function process(ServerRequestInterface $request)

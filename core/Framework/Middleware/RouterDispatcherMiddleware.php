@@ -5,6 +5,9 @@ use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Si une route a été matché, appel la fonction liée a la route
+ */
 class RouterDispatcherMiddleware extends AbstractMiddleware
 {
     public function process(ServerRequestInterface $request)

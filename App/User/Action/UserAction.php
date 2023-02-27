@@ -34,6 +34,10 @@ class UserAction
         $this->router = $container->get(Router::class);
         $this->repository = $container->get(EntityManager::class)->getRepository(User::class);
         $this->session = $container->get(SessionInterface::class);
+        $user = $this->session->get('auth');
+        if ($user) {
+            $this->renderer->addGlobal('user', $user);
+        }
     }
 
     public function logView(ServerRequest $request)

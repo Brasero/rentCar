@@ -8,6 +8,10 @@ use Core\Toaster\Toaster;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Verifie si la route est protégé grâce au début de l'url,
+ * si oui s'assure que l'utilisateur a le droit d'y accéder
+ */
 class UserAuthMiddleware extends AbstractMiddleware
 {
     use RedirectTrait;

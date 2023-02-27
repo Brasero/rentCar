@@ -27,9 +27,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-light active" aria-current="page" href="/">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" aria-current="page" href="{{ path('user.login') }}">Inscription / Connexion</a>
-                        </li>
+                        {% if user %}
+                            <li class="nav-item">
+                                <a class="nav-link text-light" aria-current="page" href="">Déconnexion</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link text-light" aria-current="page" href="{{ path('user.login') }}">Inscription / Connexion</a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -38,7 +44,9 @@
     <main>
 
         {% if hasToast() %}
-            {{ renderToast() }}
+            {% for toast in renderToast() %}
+                {{ toast | raw }}
+            {% endfor %}
         {% endif %}
 
     {% block body %}

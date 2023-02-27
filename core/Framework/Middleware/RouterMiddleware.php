@@ -5,6 +5,11 @@ use Core\Framework\Router\Router;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Vérifie que l'url de la requête corresponde à une route, si oui enregistre la route dans $request, récupère les attributs de la route ($_GET)
+ * sinon on passe la requête au middleware suivant sans modification dans le but quelle finisse dans les NotFoundMiddleware
+ * P.S.: a besoin du router pour fonctionner
+ */
 class RouterMiddleware extends AbstractMiddleware
 {
     private ContainerInterface $container;

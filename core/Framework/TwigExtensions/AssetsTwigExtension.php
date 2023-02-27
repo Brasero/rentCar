@@ -4,6 +4,11 @@ namespace Core\Framework\TwigExtensions;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
+/**
+ * Extension Twig permettant d'acceder directement au dossier public
+ * utile pour donner les chemins des feuilles de style, des scripts js, des images
+ * et de tout ce qui peut se trouver dans le dossier assets de public
+ */
 class AssetsTwigExtension extends AbstractExtension
 {
 
