@@ -47,7 +47,9 @@
 <main>
 
     {% if hasToast() %}
-        {{ renderToast() }}
+        {% for toast in renderToast() %}
+            {{ toast | raw }}
+        {% endfor %}
     {% endif %}
 
     {% block body %}

@@ -10,6 +10,7 @@
             <span class="input-group-text" id="inputGroup-sizing-sm">Mot de passe</span>
             <input type="password" name="mdp" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
         </div>
+        {{ csrf() }}
         <input type="submit" value="Se connecter" />
     </form>
 {% endblock %}

@@ -5,6 +5,7 @@ use App\Car\CarModule;
 use App\Home\HomeModule;
 use App\User\UserModule;
 use Core\Framework\Middleware\AdminAuthMiddleware;
+use Core\Framework\Middleware\CSRFMiddleware;
 use Core\Framework\Middleware\NotFoundMiddleware;
 use Core\Framework\Middleware\RouterDispatcherMiddleware;
 use Core\Framework\Middleware\RouterMiddleware;
@@ -50,6 +51,9 @@ $app = new App($container, $modules);
 //Puis on ajoute les middleware suivant en leur passant le container de dépendances si besoin
 $app->linkFirst(new TrailingSlashMiddleware())
     ->linkWith(new RouterMiddleware($container))
+    ->linkWith(new CSRFMiddleware($container, [
+        '/admin/addCar'
+    ]))
     ->linkWith(new AdminAuthMiddleware($container))
     ->linkWith(new UserAuthMiddleware($container))
     ->linkWith(new RouterDispatcherMiddleware())

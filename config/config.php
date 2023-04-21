@@ -5,6 +5,7 @@ use Core\Framework\Renderer\RendererInterface;
 use Core\Framework\Router\Router;
 use Core\Framework\Renderer\TwigRendererFactory;
 use Core\Framework\Router\RouterTwigExtension;
+use Core\Framework\Security\CSRFTwigExtension;
 use Core\Framework\TwigExtensions\AssetsTwigExtension;
 use Core\Session\PHPSession;
 use Core\Session\SessionInterface;
@@ -22,7 +23,8 @@ return [
     "twig.extensions" => [
         RouterTwigExtension::class,
         ToasterTwigExtension::class,
-        AssetsTwigExtension::class
+        AssetsTwigExtension::class,
+        CSRFTwigExtension::class
     ],
     Router::class => \DI\create(),
     SessionInterface::class => \DI\get(PHPSession::class),

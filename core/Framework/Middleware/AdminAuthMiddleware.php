@@ -33,7 +33,7 @@ class AdminAuthMiddleware extends AbstractMiddleware
             //On récupère l'objet qui gére l'administrateur
             $auth = $this->container->get(AdminAuth::class);
             //On verifie si l'administrateur et connécté et qu'il s'agit bien d'un administrateur
-            if (!$auth->isLogged()) {
+            if (!$auth->isLogged() || !$auth->isAdmin()) {
                 if(!$auth->isLogged()){
                     //Si personne n'est connécté on renvoi un message en consequence
                     $this->toaster->makeToast("Vous devez être connecté pour accéder à cette page", Toaster::ERROR);
